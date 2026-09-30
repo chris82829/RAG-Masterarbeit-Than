@@ -1,0 +1,67 @@
+services:
+  db:
+    build: ./containers/db
+    container_name: jobby_db
+    restart: always
+    volumes:
+      - ./containers/db/data:/var/lib/postgresql
+      - ./containers/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    environment:
+      - POSTGRES_DB=${DB_NAME:-jobby_db}
+      - POSTGRES_USER=${DB_USER:-jobby_admin}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    ports:
+      - '127.0.0.1:5432:5432'
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_cron,pg_stat_statements,pg_search
+      -c cron.database_name=postgres
+      -c pg_stat_statements.track=all
+      -c track_io_timing=on
+      -c work_mem=128MB
+      -c shared_buffers=256MB
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+
+  embedding_server:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: embedding_server
+    ports:
+      - '127.0.0.1:8000:8000'
+    volumes:
+      - ./models:/models
+    environment:
+      - LLAMA_ARG_MODEL=/models/jina-embeddings-v3-Q8_0.gguf
+      - LLAMA_ARG_HOST=0.0.0.0
+      - LLAMA_ARG_PORT=8000
+      - LLAMA_ARG_THREADS=2
+      - LLAMA_ARG_CTX_SIZE=2048
+      - LLAMA_ARG_EMBEDDINGS=true
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  reranker_server:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: reranker_server
+    ports:
+      - '127.0.0.1:8001:8001'
+    volumes:
+      - ./models:/models
+    environment:
+      - LLAMA_ARG_MODEL=/models/bge-reranker-v2-m3-Q4_K_M.gguf
+      - LLAMA_ARG_HOST=0.0.0.0
+      - LLAMA_ARG_PORT=8001
+      - LLAMA_ARG_THREADS=2
+      - LLAMA_ARG_CTX_SIZE=2048
+      - LLAMA_ARG_RERANKING=true
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G

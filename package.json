@@ -1,0 +1,73 @@
+{
+  "name": "rag-masterarbeit-than",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint . --fix",
+    "ai:devtool": "npx @ai-sdk/devtools",
+    "db:push": "pnpm exec drizzle-kit push",
+    "db:pull": "pnpm exec drizzle-kit pull",
+    "db:migrate": "pnpm exec drizzle-kit migrate",
+    "db:generate": "pnpm exec drizzle-kit generate",
+    "typecheck": "nuxt typecheck",
+    "start": "node --env-file=.env .output/server/index.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "catalog:",
+    "@ai-sdk/vue": "catalog:",
+    "@effect/opentelemetry": "catalog:",
+    "@effect/sql": "catalog:",
+    "@effect/sql-pg": "catalog:",
+    "@iconify-json/lucide": "catalog:",
+    "@internationalized/date": "catalog:",
+    "@nuxt/ui": "catalog:",
+    "@nuxtjs/mdc": "catalog:",
+    "@opentelemetry/api": "catalog:",
+    "@opentelemetry/sdk-logs": "catalog:",
+    "@opentelemetry/sdk-metrics": "catalog:",
+    "@opentelemetry/sdk-trace-base": "catalog:",
+    "@opentelemetry/sdk-trace-node": "catalog:",
+    "@opentelemetry/sdk-trace-web": "catalog:",
+    "@pinia/nuxt": "catalog:",
+    "@vueuse/core": "catalog:",
+    "@vueuse/nuxt": "catalog:",
+    "ai": "catalog:",
+    "drizzle-orm": "catalog:",
+    "effect": "catalog:",
+    "pg": "catalog:",
+    "pinia": "catalog:",
+    "striptags": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@ai-sdk/devtools": "catalog:",
+    "@antfu/eslint-config": "catalog:",
+    "@nuxt/eslint": "catalog:",
+    "@nuxt/hints": "catalog:",
+    "@toon-format/toon": "catalog:",
+    "@types/pg": "catalog:",
+    "drizzle-kit": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-format": "catalog:",
+    "nano-staged": "catalog:",
+    "nuxt": "catalog:",
+    "simple-git-hooks": "catalog:",
+    "typescript": "catalog:",
+    "vue-tsc": "catalog:"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx nano-staged"
+  },
+  "nano-staged": {
+    "*": "npx eslint . --fix"
+  }
+}

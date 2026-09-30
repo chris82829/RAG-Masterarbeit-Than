@@ -1,0 +1,43 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+.devtools
+
+models/*.gguf
+models/*.log
+models/*.pid
+dumps/*.dump
+containers/db/data
+
+# Local data, model weights, and credentials
+*.dump
+*.gguf
+*.sqlite
+*.sqlite3
+*.pem
+*.key
+*.p12
+.pnpm-store/
+backups/

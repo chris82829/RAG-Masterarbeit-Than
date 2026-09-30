@@ -1,0 +1,31 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+:root {
+  --ui-primary: #01b25f;
+
+  --ui-border: var(--ui-color-neutral-300);
+  --ui-radius: 0.375rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-bg-accented) transparent;
+}
+
+.dark {
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-border: var(--ui-color-neutral-700);
+}
+
+@utility flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@utility text-color {
+  @apply bg-linear-to-tr from-warning-700 via-success-700 to-info-700 dark:from-warning dark:via-success dark:to-info animate-pulse bg-clip-text text-transparent;
+}
+
+@utility bg-color {
+  @apply bg-linear-to-tr from-warning-700 via-success-700 to-info-700 dark:from-warning dark:via-success dark:to-info animate-pulse;
+}
